@@ -1,4 +1,7 @@
-com\app_chat\guadar.class
 com\app_chat\stage.class
 com\app_chat\FXMLController.class
 com\app_chat\MainApp.class
+com\app_chat\guadar.class
+com\app_chat\FXMLChatController.class
+com\app_chat\super_chat.class
+com\app_chat\Infinity.class

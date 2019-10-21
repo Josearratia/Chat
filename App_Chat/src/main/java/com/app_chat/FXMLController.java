@@ -1,15 +1,19 @@
 package com.app_chat;
 
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
 
 public class FXMLController implements Initializable {
     
@@ -20,11 +24,15 @@ public class FXMLController implements Initializable {
     @FXML
     private Button btn_btn2;
     @FXML
+    private Button btn_btn3;
+    @FXML
     private TextField user;
     @FXML
-    private PasswordField pass;
+    private TextField img;
     @FXML
     public static Label Label_info;
+    @FXML
+    private TextField ip;
     
     @FXML
     private void sesion(){
@@ -33,16 +41,44 @@ public class FXMLController implements Initializable {
         Label_Titutlo.setText("Inicio de sesion");
         btn_btn1.setText("Entrar");
         btn_btn2.setText("Registrarse");
+        ip.setText("127.0.0.1");
+        img.setText("src/main/resources/fxml/Default.png");
+        btn_btn2.setVisible(false);
         
         btn_btn1.setOnAction((ActionEvent event) -> {
-            System.out.println("entrar");
-            
+            try {
+                System.out.println("entrar");
+                guardar();
+            } catch (Exception ex) {
+                Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
         
         btn_btn2.setOnAction((ActionEvent event) -> {
             System.out.println("Registrarse");
             
             registrarse();
+        });
+        
+        btn_btn3.setOnAction( event -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Buscar Imagen");
+
+        // Agregar filtros para facilitar la busqueda
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("All Images", "*.*"),
+                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+                new FileChooser.ExtensionFilter("PNG", "*.png")
+        );
+
+        // Obtener la imagen seleccionada
+        File imgFile = fileChooser.showOpenDialog(null);
+
+        // Mostar la imagen
+        if (imgFile != null) {
+            Image image = new Image("file:" + imgFile.getAbsolutePath());
+            img.setText(imgFile.getAbsolutePath().toString());
+        }
         });
     }
     
@@ -56,7 +92,11 @@ public class FXMLController implements Initializable {
         
         btn_btn1.setOnAction((ActionEvent event) -> {
             System.out.println("Guardar");
-            guardar();
+            try {
+                guardar();
+            } catch (Exception ex) {
+                Logger.getLogger(FXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
         
         btn_btn2.setOnAction((ActionEvent event) -> {
@@ -65,13 +105,18 @@ public class FXMLController implements Initializable {
         });
     }
     
+    static guadar usuario;
     @FXML
-    private void guardar(){
-        new guadar(user.getText(),pass.getText()).SetValidar();
+    private void guardar() throws Exception{
+        usuario = new guadar(user.getText(),img.getText(),ip.getText());
+        usuario.SetValidar();
     }
     
+    public static guadar getuser(){
+        return usuario;
+    }
+            
     
-   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         sesion();

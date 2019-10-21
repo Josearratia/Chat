@@ -7,25 +7,25 @@ package com.app_chat;
 
 
 import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 
 /**
  *
  * @author pintu
  */
-public class guadar{
-    String usuario, contrasena;
-    boolean TrueSave;
-    
-    public guadar(String user, String pass){
+public class guadar extends super_chat{
+    public guadar(String user, String pass, String ip){
         usuario = user;
-        contrasena = pass;
+        imagen = pass;
+        this.ip = ip;
     }
     
-    public void SetValidar(){
+    @Override
+    public void SetValidar() throws Exception{
         if(usuario.length() > 0){
            if(usuario != null || !usuario.isEmpty()){
-                if(contrasena.length() > 0){
-                    if(contrasena != null || !contrasena.isEmpty()){
+                if(imagen.length() > 0){
+                    if(imagen != null || !imagen.isEmpty()){
                         guardado();
                     }else{
                         err();
@@ -49,11 +49,13 @@ public class guadar{
         err.showAndWait();
     }
     
-    private void guardado(){
+    private void guardado() throws Exception{
         Alert err = new Alert(Alert.AlertType.INFORMATION);
         err.setTitle("Usuario guardado");
         err.setHeaderText("Se registro con exito");
-        err.showAndWait();   
+        err.showAndWait();
+        Stage chat = null;
+        new stage().chat();
     }
 }
 

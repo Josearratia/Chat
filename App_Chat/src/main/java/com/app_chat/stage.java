@@ -25,7 +25,18 @@ public class stage extends Application{
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
         stage.setScene(scene);
-        stage.initStyle(StageStyle.UTILITY);
+        stage.initStyle(StageStyle.UNIFIED);
         stage.show();
+    }
+    
+    public void chat() throws Exception {
+        Parent schat = FXMLLoader.load(getClass().getResource("/fxml/chat.fxml"));
+        Stage chat = new Stage();
+        //ene scene = new Scene();
+        //scene.getStylesheets().add("/styles/Styles.css");
+        chat.setTitle("Chat");
+        chat.setScene(new Scene(schat));
+        chat.initStyle(StageStyle.UNIFIED);
+        chat.show();
     }
 }
